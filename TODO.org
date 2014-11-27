@@ -4,7 +4,7 @@
 A dynamic list of tasks that need to be done.  Old tasks will likely
 be pruned so this shouldn't serve as a definitive history.
 
-* TODO Initial app design
+* DONE Initial app design
 
 The app will have a standard status bar and only allow landscape mode.
 
