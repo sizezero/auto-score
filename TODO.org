@@ -1,0 +1,72 @@
+
+* Tasks TODO
+
+A dynamic list of tasks that need to be done.  Old tasks will likely
+be pruned so this shouldn't serve as a definitive history.
+
+* TODO Initial app design
+
+The app will have a standard status bar and only allow landscape mode.
+
+The first version of the app will have the following consecutive
+stages:
+
+Status bar will have icon, previous button, reset button.
+
+** taking picture
+
+Overlaid onto a camera view is a picture taking button and a folder
+which allows a user to select a picture.  Taking a picture or
+selecting an image transitions to the next mode.
+
+** select border N
+
+The points need to be selected to represent the border of the player
+matt.  This is just temporary and will eventually be replaced with
+auto detection so don't make this too pretty.
+
+The three points to be selected are the lower left, upper left, upper
+right.  Each selection should show the selected dot with a bright
+green, high alpha dot with a similar connector to other dots.
+
+Each selected button should represent a separate stage honored by the
+previous button.
+
+** final
+
+once the last dot is chosen, perform an affine transform to adjust the
+photo.  Add a colored layer over the top of the photo to identify the
+different sections.
+
+* TODO status bar
+
+icon, previous button, refresh button, empty view in main area
+
+* TODO framelayout
+
+background image, forground alpha
+
+* TODO camera
+
+Display camera button.  Take a picture, display it and move to a
+subsequent stage.  Refresh clears the picture and resets the stage.
+
+* TODO select image
+
+instead of taking a picture, allow an image to be selected from
+filesystem / gallery.
+
+* TODO single dot
+
+Allow a single dot to be selected and display the dot as an alpha
+green circle on the image.  Stage advances.
+
+* TODO two more dots
+
+Two more dots connected by lines
+
+* TODO affine transform
+
+select a normal ratio for the three dots.  Map to a ratio of 1.4283.
+Need room for locomotives on the left.
+
