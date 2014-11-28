@@ -3,7 +3,10 @@ package org.kleemann.autoscore
 import org.scaloid.common._
 import android.graphics.Color
 
-class Main extends SActivity {
+import android.view.Menu
+import android.view.MenuItem
+
+class Main extends SActivity  {
 
   onCreate {
     contentView = new SVerticalLayout {
@@ -22,5 +25,13 @@ class Main extends SActivity {
       SEditText("Yellow input field fills the space").fill
     } padding 20.dip
   }
+
+  override def onCreateOptionsMenu(menu: Menu) = {
+    getMenuInflater.inflate(R.menu.actions, menu)
+    true
+  }
+
+  def onUndo(item: MenuItem)  = toast("Undo")
+  def onRestart(item: MenuItem)  = toast("Restart")
 
 }

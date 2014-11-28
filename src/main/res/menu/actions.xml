@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_undo"
+          android:title="@string/action_bar_undo" 
+	  android:showAsAction="ifRoom"
+          android:onClick="onUndo" />
+    <item android:id="@+id/action_restart"
+          android:title="@string/action_bar_restart" 
+	  android:showAsAction="ifRoom"
+          android:onClick="onRestart" />
+</menu>

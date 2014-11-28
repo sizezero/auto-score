@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MainActivity</string>
+    <string name="app_name">Auto Score</string>
     <string name="red">Red alert!</string>
+    <string name="action_bar_undo">Undo</string>
+    <string name="action_bar_restart">Restart</string>
 </resources>
