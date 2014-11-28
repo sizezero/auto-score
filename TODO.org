@@ -38,7 +38,7 @@ once the last dot is chosen, perform an affine transform to adjust the
 photo.  Add a colored layer over the top of the photo to identify the
 different sections.
 
-* TODO action bar
+* DONE action bar
 
 icon, previous button, refresh button, empty view in main area
 
