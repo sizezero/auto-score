@@ -42,7 +42,7 @@ different sections.
 
 icon, previous button, refresh button, empty view in main area
 
-* TODO framelayout
+* DONE framelayout
 
 background image, forground alpha
 
