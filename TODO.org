@@ -46,7 +46,7 @@ icon, previous button, refresh button, empty view in main area
 
 background image, forground alpha
 
-* TODO camera
+* DONE camera
 
 Display camera button.  Take a picture, display it and move to a
 subsequent stage.  Refresh clears the picture and resets the stage.
