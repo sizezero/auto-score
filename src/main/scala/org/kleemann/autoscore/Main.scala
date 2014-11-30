@@ -17,8 +17,6 @@ import android.widget.{FrameLayout, Toast}
 
 class Main extends SActivity  {
 
-  var fileUri: Uri = Uri.EMPTY
-
   onCreate {
     contentView = new SFrameLayout {
 
@@ -50,16 +48,11 @@ class Main extends SActivity  {
     true
   }
 
-  override def onSaveInstanceState(savedInstanceState: Bundle) {
-    super.onSaveInstanceState(savedInstanceState)
-    savedInstanceState.putString("fileUri", fileUri.toString)
-  }
-
-  override def onRestoreInstanceState(savedInstanceState: Bundle) {
-    // Always call the superclass so it can restore the view hierarchy
-    super.onRestoreInstanceState(savedInstanceState)
-    fileUri = Uri.parse(savedInstanceState.getString("fileUri"))
-  }
+  // Used by takeAPicture and onActivity Result since this data cannot 
+  // be communicated through the camera intent.  This activity could 
+  // be destroyed while camera intent is active so we need to save this
+  // data.
+  var fileUri: Uri = Uri.EMPTY
 
   def takeAPicture {
     // use an intent to have the user create a picture
@@ -83,6 +76,17 @@ class Main extends SActivity  {
         // Image capture failed, advise user
       }
     }
+  }
+
+  override def onSaveInstanceState(savedInstanceState: Bundle) {
+    super.onSaveInstanceState(savedInstanceState)
+    savedInstanceState.putString("fileUri", fileUri.toString)
+  }
+
+  override def onRestoreInstanceState(savedInstanceState: Bundle) {
+    // Always call the superclass so it can restore the view hierarchy
+    super.onRestoreInstanceState(savedInstanceState)
+    fileUri = Uri.parse(savedInstanceState.getString("fileUri"))
   }
 
   def usePreviousPicture {
