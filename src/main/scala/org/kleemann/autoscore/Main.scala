@@ -22,9 +22,25 @@ class Main extends SActivity  {
   onCreate {
     contentView = new SFrameLayout {
 
-      SButton(R.string.take_picture)
-	  .<<.wrap.Gravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL).>>
-          .onClick { takeAPicture }
+      this += new SVerticalLayout {
+
+        SButton(R.string.take_picture)
+	    .<<.wrap.Gravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL).>>
+            .onClick { takeAPicture }
+
+	val hasFiles = Main.mediaStorageDir.listFiles.size != 0
+
+        SButton(R.string.select_picture)
+	    .<<.wrap.Gravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL).>>
+	    .enabled(hasFiles)
+            .onClick { toast("TODO: Select a Photo") }
+
+        SButton(R.string.previous_picture)
+	    .<<.wrap.Gravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL).>>
+	    .enabled(hasFiles)
+            .onClick { usePreviousPicture }
+
+      }
 
     } padding 20.dip
   }
@@ -48,7 +64,7 @@ class Main extends SActivity  {
   def takeAPicture {
     // use an intent to have the user create a picture
     val intent: Intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-    fileUri = Main.getOutputMediaFileUri(Main.MEDIA_TYPE_IMAGE) // create a file to save the image
+    fileUri = Uri.fromFile(Main.getOutputMediaFile(Main.MEDIA_TYPE_IMAGE)) // create a file to save the image
     intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
     startActivityForResult(intent, Main.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE)
   }
@@ -60,7 +76,7 @@ class Main extends SActivity  {
 	if (fileUri == null) {
           // Image captured and saved to fileUri specified in the Intent
           //Toast.makeText(this, "fileUri is null", Toast.LENGTH_LONG).show()
-	} else nextActivity
+	} else nextActivity(fileUri)
       } else if (resultCode == android.app.Activity.RESULT_CANCELED) {
         // User cancelled the image capture
       } else {
@@ -69,11 +85,16 @@ class Main extends SActivity  {
     }
   }
 
+  def usePreviousPicture {
+    val fs = Main.mediaStorageDir.listFiles.toList.sorted
+    if (!fs.isEmpty) nextActivity(Uri.fromFile(fs.last))
+  }
+
   /**
    * We have a picture; go to the next activity */
-  def nextActivity {
+  def nextActivity(pictureUri: Uri) {
     val intent: Intent = new Intent(this, classOf[SelectBorder]);
-    intent.setData(fileUri)
+    intent.setData(pictureUri)
     startActivity(intent);
   }
 
@@ -88,19 +109,16 @@ object Main {
   val MEDIA_TYPE_IMAGE = 1
   val CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100
 
-  /** Create a file Uri for saving an image or video */
-  def getOutputMediaFileUri(type0: Int): Uri = Uri.fromFile(getOutputMediaFile(type0))
+  // To be safe, you should check that the SDCard is mounted
+  // using Environment.getExternalStorageState() before doing this.
+  // This location works best if you want the created images to be shared
+  // between applications and persist after your app has been uninstalled.
+  val mediaStorageDir: File = new File(Environment.getExternalStoragePublicDirectory(
+              Environment.DIRECTORY_PICTURES), "MyCameraApp")
 
   /** Create a File for saving an image or video.
    * Taken from android examples. Can probably do better */
   def getOutputMediaFile(type0: Int): File = {
-    // To be safe, you should check that the SDCard is mounted
-    // using Environment.getExternalStorageState() before doing this.
-
-    val mediaStorageDir: File = new File(Environment.getExternalStoragePublicDirectory(
-              Environment.DIRECTORY_PICTURES), "MyCameraApp")
-    // This location works best if you want the created images to be shared
-    // between applications and persist after your app has been uninstalled.
 
     // Create the storage directory if it does not exist
     if (! mediaStorageDir.exists()) {

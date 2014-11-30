@@ -51,7 +51,7 @@ background image, forground alpha
 Display camera button.  Take a picture, display it and move to a
 subsequent stage.  Refresh clears the picture and resets the stage.
 
-* TODO select image
+* DONE select image
 
 instead of taking a picture, allow an image to be selected from
 filesystem / gallery.
