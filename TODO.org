@@ -56,12 +56,12 @@ subsequent stage.  Refresh clears the picture and resets the stage.
 instead of taking a picture, allow an image to be selected from
 filesystem / gallery.
 
-* TODO single dot
+* DONE single dot
 
 Allow a single dot to be selected and display the dot as an alpha
 green circle on the image.  Stage advances.
 
-* TODO two more dots
+* DONE two more dots
 
 Two more dots connected by lines
 
