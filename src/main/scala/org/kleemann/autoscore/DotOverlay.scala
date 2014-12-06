@@ -37,4 +37,3 @@ class DotOverlay(context: Context) extends View(context) {
     invalidate
   }
 }
-
