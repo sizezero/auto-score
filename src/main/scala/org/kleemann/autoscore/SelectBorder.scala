@@ -3,7 +3,7 @@ package org.kleemann.autoscore
 import org.scaloid.common._
 
 import android.content.Intent
-import android.graphics.{Bitmap, BitmapFactory, Color}
+import android.graphics.{Bitmap, BitmapFactory, Color, PointF}
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -28,10 +28,20 @@ class SelectBorder extends SActivity  {
       this += iv.<<.wrap.Gravity(Gravity.TOP | Gravity.LEFT).>>.onTouch( (v, me) => {
 	if (me.getAction == MotionEvent.ACTION_UP) {
 	  dotOverlay.addPoint(me.getX, me.getY)
-	  if (dotOverlay.circles.size == 3) {
+	  if (dotOverlay.circles.size >= 3) {
+
+	    // scale circles to bitmap size, not image size
+	    val ratio = bitmap.getWidth.toFloat / iv.width.toFloat
+	    val pts: List[PointF] = dotOverlay.circles.toList.
+	      map{ p => new PointF(p.x*ratio, p.y*ratio) }
+
 	    // transition to the solution activity
 	    // TODO: this should be done in a background thread
-	    Global.solution = Transform.all(bitmap)
+	    Global.solution = Transform.all(
+	      bitmap, 
+	      pts(0),
+	      pts(1),
+	      pts(2))
 	    val intent: Intent = new Intent(SelectBorder.this, classOf[Solution]);
 	    startActivity(intent);
 	  }
